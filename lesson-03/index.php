@@ -1,6 +1,46 @@
 <?php
   $meta_title = 'minimalistica';
   $meta_h1 = $meta_title;
+  $menu = [
+    [
+      'title' => 'home',
+      'url' => '#'
+    ],
+    [
+      'title' => 'archive',
+      'url' => '#'
+    ],
+    [
+      'title' => 'contact',
+      'url' => '#',
+      /*'subitems' => [
+        [
+          'title' => 'subitem 1',
+          'url' => '#'
+        ],
+        [
+          'title' => 'subitem 2',
+          'url' => '#'
+        ]
+      ]*/
+    ]
+  ];
+
+  // Рекурсивно выводим все вложеннные меню
+  function _menu($menu, $level = 1) {
+    foreach ($menu as $v) {
+      ?><li>
+        <a href="<?php echo htmlentities($v['url']); ?>">
+          <?php echo htmlentities($v['title']); ?>
+          <?php if (!empty($v['subitems'])): ?>
+            <ul class="menu-<?php echo ($level + 1); ?>">
+              <?php _menu($v['subitems'], $level + 1); ?>
+            </ul>
+          <?php endif; ?>
+        </a>
+      </li><?php
+    }
+  }
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -12,11 +52,9 @@
 <body>
 	<div id="content">
 		<h1><?php echo htmlentities($meta_h1); ?></h1>
-		
+
 		<ul id="menu">
-			<li><a href="#">home</a></li>
-			<li><a href="#">archive</a></li>
-			<li><a href="#">contact</a></li>
+			<?php _menu($menu); ?>
 		</ul>
 	
 		<div class="post">
