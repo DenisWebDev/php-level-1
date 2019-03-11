@@ -116,7 +116,7 @@
 
   <section id="gallery">
     <?php foreach (scandir('images/small') as $img): ?>
-      <?php if ($img == '.' or $img == '..') continue; ?>
+      <?php if (!preg_match('~\.(jpg|gif|png)$~', $img)) continue; ?>
       <a data-fancybox="gallery" href="/images/big/<?php echo $img; ?>">
         <img src="/images/small/<?php echo $img; ?>" />
       </a>
