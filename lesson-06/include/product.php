@@ -5,7 +5,7 @@
     $data = (array)$data;
     $errors = [];
 
-    $item = _validate($id, $data, $errors);
+    $item = _productValidate($id, $data, $errors);
 
     if (!empty($_FILES['image']['name'])) {
       if (!$errors) {
@@ -36,7 +36,7 @@
     return false;
   }
 
-  function _validate($id, $data, &$errors = []) {
+  function _productValidate($id, $data, &$errors = []) {
     $item = [];
     $item['name'] = trim(strip_tags($data['name'] ?? ''));
     if ($item['name'] === '') {

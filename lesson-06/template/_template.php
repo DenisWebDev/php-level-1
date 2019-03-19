@@ -23,6 +23,11 @@
               <a class="nav-link" href="/">Главная</a>
             </li>
             <li class="nav-item<?php
+              echo tplGet('controller') == 'reviews' ? ' active' : '';
+            ?>">
+              <a class="nav-link" href="/reviews.php">Отзывы</a>
+            </li>
+            <li class="nav-item<?php
               echo tplGet('controller') == 'calculator' ? ' active' : '';
             ?>">
               <a class="nav-link" href="/calculator.php">Калькулятор</a>

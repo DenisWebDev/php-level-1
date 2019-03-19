@@ -7,5 +7,4 @@
   tplSet('products', productGetList());
 
   render('index');
-
 ?>
