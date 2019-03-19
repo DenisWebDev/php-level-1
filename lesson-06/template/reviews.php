@@ -20,6 +20,13 @@
             echo _esc(reqPost('text'));
           ?></textarea>
         </div>
+        <div class="form-group">
+          Решите пример: <?php echo $num1; ?>
+          +
+          <?php echo $num2; ?>
+          =
+          <input type="text" class="form-control d-inline-block" name="answer" style="width: 80px;" />
+        </div>
         <button type="submit" class="btn btn-primary" name="save">Сохранить</button>
       </form>
     </div>
