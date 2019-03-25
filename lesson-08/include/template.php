@@ -1,17 +1,7 @@
 <?php
 
   function render($tpl) {
-    $content = false;
-    if (is_file(_ROOT_DIR_.'/template/'.$tpl.'.php')) {
-      ob_start();
-      (function($tpl) {
-        $__vars = tplGet();
-        extract($__vars);
-        unset($__vars);
-        include _ROOT_DIR_.'/template/'.$tpl.'.php';
-      })($tpl);
-      $content = ob_get_clean();
-    }
+    $content = _tplGetContent($tpl);
     while (ob_get_level()) {
       if (_DEBUG_) {
         $output = trim(ob_get_clean());
@@ -30,6 +20,25 @@
     header("Content-type: text/html; charset=utf-8");
     echo $html;
     exit();
+  }
+
+  function module($tpl) {
+    return _tplGetContent($tpl);
+  }
+
+  function _tplGetContent($tpl) {
+    $content = false;
+    if (is_file(_ROOT_DIR_.'/template/'.$tpl.'.php')) {
+      ob_start();
+      (function($tpl) {
+        $__vars = tplGet();
+        extract($__vars);
+        unset($__vars);
+        include _ROOT_DIR_.'/template/'.$tpl.'.php';
+      })($tpl);
+      $content = ob_get_clean();
+    }
+    return $content;
   }
 
   function renderJson($data) {

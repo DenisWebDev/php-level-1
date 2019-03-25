@@ -68,4 +68,30 @@
     return dbQ($sql);
   }
 
+  function productLoadDiscounts(&$products) {
+    $ids = [];
+    foreach ($products as $v) {
+      $ids[] = $v['id'];
+    }
+
+    $dics = [];
+    if ($ids) {
+      $sql = 'SELECT discount, id_product FROM product_discount
+        WHERE id_product IN ('.implode(', ', array_map('trim', $ids)).')
+        AND date_from <= \''.date('Y-m-d H:i:s').'\'
+        AND date_to >= \''.date('Y-m-d H:i:s').'\'';
+      $dics = dbValues($sql, 'id_product');
+    }
+
+    foreach ($products as &$product) {
+      $product['discount'] = array_key_exists($product['id'], $dics)
+        ? $dics[$product['id']] : 0;
+      if ($product['discount'] > 0) {
+        $product['old_price'] = $product['price'];
+        $product['price'] = round($product['price']*(1 - $product['discount']/100));
+      }
+    }
+
+  }
+
 ?>

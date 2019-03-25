@@ -19,9 +19,45 @@
   function actionIndex() {
     tplSet('meta_title', 'Каталог товаров');
 
-    tplSet('products', productGetList());
+    $products = productGetList();
+    productLoadDiscounts($products);
+
+    tplSet('products', $products);
 
     render('admin_index');
+  }
+
+  function actionOrdersList() {
+    tplSet('meta_title', 'Заказы');
+
+    $orders = orderGetList();
+
+    tplSet('orders', $orders);
+
+    render('admin_orders');
+  }
+
+  function actionOrderDetails() {
+    $id = (int)reqGet('id');
+
+    if (isReqPost('status')) {
+      $sql = 'UPDATE `order`
+        SET status = '.(int)reqPost('status').'
+        WHERE id = '.(int)$id;
+      dbQ($sql);
+      message('Статус изменен', 'success');
+      redirect('/admin.php?action=order-details&id='.$id);
+    }
+
+    $order = orderGet($id, true);
+    if (!$order) {
+      notfound();
+    }
+    tplSet('order', $order);
+
+    tplSet('meta_title', 'Заказ #'.$id);
+
+    render('admin_order_details');
   }
 
   function actionProductForm() {

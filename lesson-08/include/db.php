@@ -54,7 +54,7 @@
     $data = [];
     if ($res = dbQ($sql)) {
       while ($r = mysqli_fetch_assoc($res)) {
-        if ($key !== null && array_key_exists($key, $data)) {
+        if ($key !== null && array_key_exists($key, $r)) {
           $data[$r[$key]] = $r;
         } else {
           $data[] = $r;
@@ -71,6 +71,20 @@
       }
     }
     return [];
+  }
+
+  function dbValues($sql, $key = null) {
+    $data = [];
+    if ($res = dbQ($sql)) {
+      while ($r = mysqli_fetch_assoc($res)) {
+        if ($key !== null && array_key_exists($key, $r)) {
+          $data[$r[$key]] = array_shift($r);
+        } else {
+          $data[] = array_shift($r);
+        }
+      }
+    }
+    return $data;
   }
 
 ?>

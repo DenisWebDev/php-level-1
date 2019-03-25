@@ -17,6 +17,11 @@
             ?>" class="bd-placeholder-img card-img-top">
             <div class="card-body">
               <p class="h6"><?php echo _esc($item['name']); ?></p>
+              <?php if ($item['discount']): ?>
+                <p class="h2" style="color: grey; text-decoration: line-through;">
+                  <strong><?php echo $item['old_price']; ?> руб.</strong>
+                </p>
+              <?php endif; ?>
               <p class="h2"><strong><?php echo $item['price']; ?> руб.</strong></p>
               <p class="card-text">
                 <?php echo mb_strimwidth($item['description'], 0, 200, '...'); ?>

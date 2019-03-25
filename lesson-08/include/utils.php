@@ -53,6 +53,10 @@
     return $_POST[$key] ?? $default;
   }
 
+  function isReqGet($key) {
+    return array_key_exists($key, $_GET);
+  }
+
   function reqGet($key, $default = false) {
     return $_GET[$key] ?? $default;
   }

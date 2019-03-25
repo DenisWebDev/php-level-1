@@ -4,7 +4,10 @@
   tplSet('controller', 'index');
   tplSet('meta_title', 'Главная');
 
-  tplSet('products', productGetList());
+  $products = productGetList();
+  productLoadDiscounts($products);
+
+  tplSet('products', $products);
 
   render('index');
 ?>
